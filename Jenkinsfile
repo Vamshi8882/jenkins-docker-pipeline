@@ -12,23 +12,24 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo 'Running tests inside Docker container...'
-                bat 'docker run --rm jenkins-docker-pipeline ./run-tests.bat'
+                // use sh inside container because it's Linux
+                bat 'docker run --rm jenkins-docker-pipeline sh ./run-tests.sh'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deployment stage (placeholder)'
+                echo 'Deploy stage (optional)'
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo '✅ Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed. Check logs.'
+            echo '❌ Pipeline failed. Check logs.'
         }
     }
 }
