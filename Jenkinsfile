@@ -5,14 +5,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t jenkins-docker-pipeline ./app'
+                bat 'docker build -t jenkins-docker-pipeline ./app'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Running tests inside Docker container...'
-                sh 'docker run --rm jenkins-docker-pipeline ./run-tests.sh'
+                bat 'docker run --rm jenkins-docker-pipeline ./run-tests.bat'
             }
         }
 
