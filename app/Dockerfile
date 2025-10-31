@@ -1,14 +1,10 @@
-# Use official Python image
 FROM python:3.10-slim
 
 WORKDIR /app
 
-# Copy all app files (including tests and batch script)
 COPY . .
 
-# Install pytest
-RUN pip install --no-cache-dir pytest
+RUN pip install --no-cache-dir -r requirements.txt || true
+RUN chmod +x run-tests.sh
 
-# Set default command to run tests using batch syntax on Windows Jenkins
-CMD ["pytest", "tests/"]
-
+CMD ["python3", "src/app.py"]

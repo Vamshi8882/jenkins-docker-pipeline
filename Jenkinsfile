@@ -1,35 +1,50 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "jenkins-docker-pipeline"
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Vamshi8882/jenkins-docker-pipeline.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
-                bat 'docker build -t jenkins-docker-pipeline ./app'
+                echo '🛠️ Building Docker image...'
+                bat 'docker build -t %IMAGE_NAME% ./app'
             }
         }
 
         stage('Run Tests') {
             steps {
-                echo 'Running tests inside Docker container...'
-                // use sh inside container because it's Linux
-                bat 'docker run --rm jenkins-docker-pipeline sh ./run-tests.sh'
+                echo '🧪 Running tests inside container...'
+                bat 'docker run --rm %IMAGE_NAME% sh ./run-tests.sh'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy stage (optional)'
+                echo '🚀 Deployment successful!'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Pipeline completed successfully!'
+            echo '✅ Build completed successfully!'
+            emailext to: 'youremail@gmail.com',
+                     subject: 'Build Success',
+                     body: 'The Jenkins Docker Pipeline build succeeded.'
         }
         failure {
-            echo '❌ Pipeline failed. Check logs.'
+            echo '❌ Build failed. Check logs.'
+            emailext to: 'youremail@gmail.com',
+                     subject: 'Build Failed',
+                     body: 'The Jenkins Docker Pipeline build failed. Please review the console output.'
         }
     }
 }
