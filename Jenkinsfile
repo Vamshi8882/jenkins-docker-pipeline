@@ -15,14 +15,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo '🛠️ Building Docker image...'
-                bat 'docker build -t %IMAGE_NAME% -f app/Dockerfile .'
+                bat 'docker build -t %IMAGE_NAME% -f Dockerfile .'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo '🧪 Running tests inside container...'
-                bat 'docker run --rm %IMAGE_NAME% sh /app/run-tests.sh'
+                bat 'docker run --rm %IMAGE_NAME% bat /run-tests.bat'
             }
         }
 
