@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt || true
-RUN chmod +x run-tests.sh
+RUN chmod +x run-tests.bat
 
 # Optional: Create and use non-root user
 RUN useradd -m appuser
