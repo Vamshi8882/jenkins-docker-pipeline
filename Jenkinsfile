@@ -22,7 +22,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo '🧪 Running tests inside container...'
-                bat 'docker run --rm %IMAGE_NAME% sh /run-tests.sh'
+                bat "docker run --rm %IMAGE_NAME% sh -c './run-tests.sh'"
             }
         }
 
